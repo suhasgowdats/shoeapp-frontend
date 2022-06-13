@@ -1,0 +1,11 @@
+.App {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+    background-image: url('./background1.jpg');
+    background-position: center;
+    background-size: cover;
+  }
