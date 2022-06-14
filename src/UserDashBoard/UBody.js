@@ -18,7 +18,7 @@ const UBody = () => {
         const tocken = localStorage.getItem("shoetocken")
         settocken(tocken)
         let options = {
-            url:"https://shoe-app-back-end-2022.herokuapp.com/fetch",
+            url:"https://shoe-ecommerce-website.herokuapp.com/fetch",
             headers:{
                 "content-type":"application/json",
                 Authorization:`Bearer ${tocken}`

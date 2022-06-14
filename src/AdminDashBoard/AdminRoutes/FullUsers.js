@@ -14,7 +14,7 @@ const FullUsers = () => {
 
     const fetchAllUSersList = async () => {
       let options = {
-        url:"https://shoe-app-back-end-2022.herokuapp.com/admin/getUsersList",
+        url:"https://shoe-ecommerce-website.herokuapp.com/admin/getUsersList",
         method:"GET",
         headers:{
           "content-type":"application/json",

@@ -30,7 +30,7 @@ const AdminProduct = () => {
   const submitHandler = async () => {
     list.uniqueId = list.shoeCompany+list.shoeName+(list.shoe_available/10)+((Math.random()*100).toFixed(0))
     let options = {
-      url:"https://shoe-app-back-end-2022.herokuapp.com/admin/adminproduct",
+      url:"https://shoe-ecommerce-website.herokuapp.com/admin/adminproduct",
       method:"POST",
       headers:{
         "content-type":"application/json",

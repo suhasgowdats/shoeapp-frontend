@@ -14,7 +14,7 @@ const BookPage = () => {
 
     const bookProduct = async() => {
         let options1 = {
-          url:"https://shoe-app-back-end-2022.herokuapp.com/user/purchase",
+          url:"https://shoe-ecommerce-website.herokuapp.com/user/purchase",
           headers:{
             "content-type":"application/json",
             Authorization:`Bearer ${tocken}`,
@@ -27,7 +27,7 @@ const BookPage = () => {
         
         
         let options2 = {
-          url:"https://shoe-app-back-end-2022.herokuapp.com/fetch/updateProduct",
+          url:"https://shoe-ecommerce-website.herokuapp.com/fetch/updateProduct",
           headers:{
             "content-type":"application/json",
             Authorization:`Bearer ${tocken}`,

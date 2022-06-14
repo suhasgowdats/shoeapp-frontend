@@ -45,7 +45,7 @@ const AdminSignup = () => {
 
     if(list.pic == "" && list.password1 == list.password2){
        options = {
-        url:"https://shoe-app-back-end-2022.herokuapp.com/admin/adminsignup",
+        url:"https://shoe-ecommerce-website.herokuapp.com/admin/adminsignup",
         headers:{
           "content-type":"application/json"
         },
@@ -61,7 +61,7 @@ const AdminSignup = () => {
    
     if(list.pic != "" && list.password1 == list.password2){
        options = {
-        url:"https://shoe-app-back-end-2022.herokuapp.com/admin/adminsignup",
+        url:"https://shoe-ecommerce-website.herokuapp.com/admin/adminsignup",
         headers:{
           "content-type":"application/json"
         },

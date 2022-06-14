@@ -13,7 +13,7 @@ const MyOrdresPgae = () => {
 
   const fetchUserOrders = async () => {
     let options = {
-      url: "https://shoe-app-back-end-2022.herokuapp.com/user/userOrdres",
+      url: "https://shoe-ecommerce-website.herokuapp.com/user/userOrdres",
       methos: "GET",
       headers: {
         "content-type": "application/json",
