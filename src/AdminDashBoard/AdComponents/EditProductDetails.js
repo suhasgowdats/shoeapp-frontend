@@ -30,7 +30,7 @@ const EditProductDetails = () => {
   const submitHandler = async () => {
     const tocken=localStorage.getItem("shoetocken")
     let options = {
-      url:"https://shoe-app-back-end-2022.herokuapp.com/fetch/updateProduct",
+      url:"https://shoe-ecommerce-website.herokuapp.com/fetch/updateProduct",
       headers:{
         "content-type":"application/json",
         Authorization:`Bearer ${tocken}`
@@ -75,7 +75,7 @@ const EditProductDetails = () => {
   const fetchSingProductDetails = async () => {
     const tocken=localStorage.getItem("shoetocken")
     let options = {
-      url:`https://shoe-app-back-end-2022.herokuapp.com/fetch/singleProduct/${id}`,
+      url:`https://shoe-ecommerce-website.herokuapp.com/fetch/singleProduct/${id}`,
       method:"GET",
       headers:{
         "content-type":"application/json",

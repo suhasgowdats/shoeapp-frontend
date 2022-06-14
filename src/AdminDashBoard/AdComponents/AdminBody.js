@@ -18,7 +18,7 @@ const AdminBody = () => {
   const fetchAllProducts = async () => {
     const tocken=localStorage.getItem("shoetocken")
     let options = {
-      url: "https://shoe-app-back-end-2022.herokuapp.com/fetch",
+      url: "https://shoe-ecommerce-website.herokuapp.com/fetch",
       headers: {
         "content-type": "application/json",
         Authorization: `Bearer ${tocken}`,
@@ -53,7 +53,7 @@ const AdminBody = () => {
   const deleteProductdetails = async (item) => {
     const tocken=localStorage.getItem("shoetocken")
     let options = {
-      url:`https://shoe-app-back-end-2022.herokuapp.com/fetch/deleteProduct/${item._id}`,
+      url:`https://shoe-ecommerce-website.herokuapp.com/fetch/deleteProduct/${item._id}`,
       method:"DELETE",
       headers:{
         "content-type":"application/json",
