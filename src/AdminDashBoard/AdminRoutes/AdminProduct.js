@@ -9,7 +9,7 @@ import AdFooter from "../AdFooter";
 const AdminProduct = () => {
   const nav = useNavigate();
   const toast = useToast()
-  const {user, tocken} = useContext(MainContext)
+  const {user, } = useContext(MainContext)
 
   const [list,setlist] = useState({
     shoeName:"",
@@ -28,6 +28,7 @@ const AdminProduct = () => {
 
 
   const submitHandler = async () => {
+    const tocken=localStorage.getItem("shoetocken")
     list.uniqueId = list.shoeCompany+list.shoeName+(list.shoe_available/10)+((Math.random()*100).toFixed(0))
     let options = {
       url:"https://shoe-ecommerce-website.herokuapp.com/admin/adminproduct",

@@ -8,11 +8,12 @@ import Header from "../AdComponents/Header";
 const FullUsers = () => {
     const nav = useNavigate()
     const toast = useToast()
-    const {allUsers, setAllUsers, tocken} = useContext(MainContext)
+    const {allUsers, setAllUsers} = useContext(MainContext)
     const [loading, setLoading] = useState(true)
 
 
     const fetchAllUSersList = async () => {
+      const tocken=localStorage.getItem("shoetocken")
       let options = {
         url:"https://shoe-ecommerce-website.herokuapp.com/admin/getUsersList",
         method:"GET",

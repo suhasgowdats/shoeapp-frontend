@@ -14,9 +14,9 @@ const AdminBody = () => {
   const toast = useToast();
   const [data,setdata] = useState([])
 
-  const { tocken } = useContext(MainContext);
 
   const fetchAllProducts = async () => {
+    const tocken=localStorage.getItem("shoetocken")
     let options = {
       url: "https://shoe-app-back-end-2022.herokuapp.com/fetch",
       headers: {
@@ -51,7 +51,7 @@ const AdminBody = () => {
 
 
   const deleteProductdetails = async (item) => {
-
+    const tocken=localStorage.getItem("shoetocken")
     let options = {
       url:`https://shoe-app-back-end-2022.herokuapp.com/fetch/deleteProduct/${item._id}`,
       method:"DELETE",
