@@ -12,86 +12,185 @@ const BookPage = () => {
 
 
 
-    const bookProduct = async() => {
-        let options1 = {
-          url:"https://shoe-ecommerce-website.herokuapp.com/user/purchase",
-          headers:{
-            "content-type":"application/json",
-            Authorization:`Bearer ${tocken}`,
-            value:"user"
-          },
-          data:selectedProduct,
-          method:"POST"
-        }
+    // const bookProduct = async() => {
+    //   const tocken = localStorage.getItem("shoetocken")
+    //     let options1 = {
+    //       url:"https://shoe-ecommerce-website.herokuapp.com/user/purchase",
+    //       headers:{
+    //         "content-type":"application/json",
+    //         Authorization:`Bearer ${tocken}`,
+    //         value:"user"
+    //       },
+    //       data:selectedProduct,
+    //       method:"POST"
+    //     }
         
         
         
-        let options2 = {
-          url:"https://shoe-ecommerce-website.herokuapp.com/fetch/updateProduct",
-          headers:{
-            "content-type":"application/json",
-            Authorization:`Bearer ${tocken}`,
-            value:"user"
-          },
-          data:{
-            _id:selectedProduct._id,
-            shoe_available:selectedProduct.shoe_available
-          },
-          method:"POST"
-        }
+    //     let options2 = {
+    //       url:"https://shoe-ecommerce-website.herokuapp.com/fetch/updateProduct",
+    //       headers:{
+    //         "content-type":"application/json",
+    //         Authorization:`Bearer ${tocken}`,
+    //         value:"user"
+    //       },
+    //       data:{
+    //         _id:selectedProduct._id,
+    //         shoe_available:selectedProduct.shoe_available
+    //       },
+    //       method:"POST"
+    //     }
 
-        let filterItems
+    //     let filterItems
 
-        try{
-          let response = await axios(options1)
-          if(response.data.message == "SuccessFully Updated"){
-             filterItems = cartItem.filter(list => list._id != selectedProduct._id)
-             toast({
-              title:"Payment SuccessFull",
-              position:"bottom",
-              duration:5000,
-              isClosable:true,
-              status:"success"
-            })
-          }else{
-            toast({
-              title:"Unable to Purchase the Product",
-              position:"bottom",
-              duration:5000,
-              isClosable:true,
-              status:"error"
-            })
+    //     try{
+    //       let response = await axios(options1)
+    //       console.log(response)
+    //       if(response.data.message == "SuccessFully Updated"){
+    //          filterItems = cartItem.filter(list => list._id != selectedProduct._id)
+    //          toast({
+    //           title:"Payment SuccessFull",
+    //           position:"bottom",
+    //           duration:5000,
+    //           isClosable:true,
+    //           status:"success"
+    //         })
+    //       }else{
+    //         toast({
+    //           title:"Unable to Purchase the Product",
+    //           position:"bottom",
+    //           duration:5000,
+    //           isClosable:true,
+    //           status:"error"
+    //         })
+    //       }
+    //     }catch(error){
+    //       toast({
+    //         title:"Unable to Purchase the Product",
+    //         position:"bottom",
+    //         duration:5000,
+    //         isClosable:true,
+    //         status:"error"
+    //       })
+    //     }
+
+
+    //       // update product quantity in the database
+    //       try{
+    //         let response = await axios(options2)
+    //         console.log(response.data)
+    //       }catch(error){
+    //         toast({
+    //           title:"Unable To Update Product Quantity",
+    //           duration:5000,
+    //           position:"bottom",
+    //           status:"error",
+    //           isClosable:true
+    //         })
+    //       }
+        
+    //       // setcartItem(filterItems)
+    //       setselectedProduct("")
+    //       setAddress("")
+    //       nav("/dashboard")
+
+    // }
+
+
+    const initPayment = (data) => {
+      const options = {
+        key: "rzp_test_WDciMXfQmSouR9",
+        amount: data.amount,
+        currency: data.currency,
+        name: selectedProduct.shoeName,
+        description: "Test Transaction",
+        image: selectedProduct.shoewImage,
+        order_id: data.id,
+        handler: async (response) => {
+          try {
+            let userlist = JSON.parse(localStorage.getItem("shoeDetails"))
+            const serverData = {
+              response,
+              userProduct:selectedProduct,
+              updateProduct:{
+                _id:selectedProduct._id,
+                shoe_available:selectedProduct.shoe_available
+              },
+              user_id:userlist._id
+            }
+            const verifyUrl = "https://shoe-ecommerce-website.herokuapp.com/api/payment/verify";
+            const { data } = await axios.post(verifyUrl, serverData);
+            if(data.message == "Payment verified successfully"){
+              toast({
+                title:"Product purchase successfull",
+                duration:4000,
+                status:"success",
+                isClosable:true,
+                position:"bottom"
+              })
+              nav("/dashboard")
+              // const removeFromCart = async () => {
+              //   const tocken = localStorage.getItem("shoetocken")
+              //   let options = {
+              //     url:`https://shoe-ecommerce-website.herokuapp.com/user/removeCartItem/${selectedProduct._id}`,
+              //     headers:{
+              //       "contnet-type":"application/json",
+              //       Authorization:`Bearer ${tocken}`,
+              //       value:"user"
+              //     },
+              //     method:"PUT",
+              //   }
+                
+                
+              //   try{
+              //     let response = await axios(options)
+              //     console.log(response)
+              //   }catch(err){
+              //     console.log(err)
+              //   }
+              // }
+
+
+              // removeFromCart()
+            }else{
+              toast({
+                title:"Unable To Purchase The Product Try Again",
+                duration:4000,
+                status:"error",
+                isClosable:true,
+                position:"bottom"
+              })
+              nav("/dashboard")
+            }
+          } catch (error) {
+            console.log(error);
+            nav("/dashboard")
           }
-        }catch(error){
-          toast({
-            title:"Unable to Purchase the Product",
-            position:"bottom",
-            duration:5000,
-            isClosable:true,
-            status:"error"
-          })
-        }
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    };
+  
+    const handlePayment = async () => {
+      try {
+        const orderUrl = "https://shoe-ecommerce-website.herokuapp.com/api/payment/orders";
+        // const orderUrl = "https://shoe-ecommerce-website.herokuapp.com/api/payment/orders";
+        const { data } = await axios.post(orderUrl, { amount: selectedProduct.shoePrice * selectedProduct.qty });
+        initPayment(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
 
-          // update product quantity in the database
-          try{
-            let response = await axios(options2)
-            console.log(response.data)
-          }catch(error){
-            toast({
-              title:"Unable To Update Product Quantity",
-              duration:5000,
-              position:"bottom",
-              status:"error",
-              isClosable:true
-            })
-          }
-        
-          setcartItem(filterItems)
-          setselectedProduct("")
-          setAddress("")
-          nav("/dashboard")
 
+    const DoubleBook = () => {
+      // bookProduct()
+      handlePayment()
     }
 
   return (
@@ -106,7 +205,7 @@ const BookPage = () => {
       ) : (
         <>
           <Box
-            d="flex"
+            display={"flex"}
             flexDir={"row"}
             alignItems="flex-start"
             justifyContent={"flex-start"}
@@ -130,7 +229,7 @@ const BookPage = () => {
             />
             <Box
               mt={"4"}
-              d="flex"
+              display={"flex"}
               flexDirection={"column"}
               alignItems={"flex-start"}
               justifyContent="space-around"
@@ -147,7 +246,7 @@ const BookPage = () => {
 
               <Box mt={4}>
                 <Button colorScheme="blue" size="md" mr={4} 
-                onClick={bookProduct}
+                onClick={DoubleBook}
                 >
                   Book
                 </Button>
